@@ -2,15 +2,26 @@
 #'
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
-#' @import shiny
+#' @import shiny bslib highcharter
 #' @noRd
 app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    fluidPage(
-      h1("minintCIR")
+    page_fluid(
+      h1("minintCIR"),
+      navset_card_underline(height = "600px",title = "Éléments descriptifs",
+                            nav_panel(title = "Pays de nationalité",
+                                      highchartOutput("highchart_stats_pays")),
+                            nav_panel(title = "Tranche d'âge",
+                                      highchartOutput("highchart_stats_age")),
+                            nav_panel(title = "Territoire",
+                                      highchartOutput("highchart_stats_territoire")),
+                            nav_panel(title = "Motif",
+                                      highchartOutput("highchart_stats_motif")),
+                            nav_panel(title = "Parcours",
+                                      highchartOutput("highchart_stats_parcours")))
     )
   )
 }
