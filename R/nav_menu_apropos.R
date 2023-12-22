@@ -8,6 +8,13 @@
 nav_menu_apropos <- function() {
   return(
     nav_menu("À propos",icon = bs_icon("info-circle-fill"),
-             nav_panel("Méthodologie",icon = bs_icon("question-octagon")),
-             nav_panel("Contact",icon = bs_icon("envelope"))))
+             nav_panel("Méthodologie",icon = bs_icon("question-octagon"),
+                       card(card_header("Méthodologie"),
+                            card_body(htmlOutput("cirmeth")))),
+             nav_item(
+                 tags$a(href="mailto:philippe.fontaine.ds@proton.me",
+                        class="nav-link",
+                        tags$i(class="fa fa-envelope"), " Contact")
+             )
+             ))
 }

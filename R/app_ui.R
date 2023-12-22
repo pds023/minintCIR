@@ -2,7 +2,7 @@
 #'
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
-#' @import shiny bslib highcharter bsicons
+#' @import shiny bslib highcharter bsicons shinyWidgets arrow esquisse DT
 #' @noRd
 app_ui <- function(request) {
   tagList(
@@ -68,16 +68,15 @@ app_ui <- function(request) {
                   img(src="www/logoapp.png", style="height:100px; width:100px;margin-bottom: -30px; margin-right:30px; border-radius: 50%"),
                   ""),
         nav_panel_exploration(),
-        nav_panel_analyse(),
         nav_menu_apropos(),
         nav_spacer(),
-        nav_item(input_dark_mode()),
+        nav_item(input_dark_mode(mode = "light")),
         tags$style(".footer{position: fixed;bottom: 0;width: 100%;background-color: rgba(8, 60, 116, 1);color: white;text-align: center;padding: 5px;margin-left:-25px;}"),
         tags$style(".footer a{color: white;}"),
         footer = tags$div(
           class = "footer",
           "Développé par ",
-          tags$a(href = "https://www.philippefontaine.dev", target = "_blank", "Philippe Fontaine"))
+          tags$a(href = "https://www.linkedin.com/in/philippe-fontaine-ds/", target = "_blank", "Philippe Fontaine"))
       )
 
     )
@@ -100,7 +99,7 @@ golem_add_external_resources <- function() {
   )
 
   tags$head(
-    favicon(),
+    favicon(ext = 'png'),
     bundle_resources(
       path = app_sys("app/www"),
       app_title = "Analyse CIR"
