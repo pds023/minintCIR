@@ -6,7 +6,7 @@
 #' @examples
 sidebar_exploration <- function() {
   renderUI({
-    accordion(id = "accordion_exploration",
+    accordion(accordion_panel(title = "Filtrer",icon = icon("filter"),
               pickerInput(inputId = "exploration_filter_sexe",multiple = TRUE,
                           options = list(
                             `live-search` = TRUE,
@@ -51,6 +51,6 @@ sidebar_exploration <- function() {
                           choices = c("")),
               actionButton(inputId = "exploration_filters_apply",label = "Appliquer"),
               actionButton(inputId = "exploration_filters_reset",label = "Réinitialiser")
-    )
+    ))
   })
 }
