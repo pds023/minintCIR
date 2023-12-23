@@ -1,0 +1,26 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# Visualisation des contrats d’intégration républicaine (CIR)
+
+<!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+<!-- badges: end -->
+
+L’objectif de minintCIR est de fournir une plateforme interactive pour
+visualiser et comprendre les données et procédures associées au Contrat
+d’intégration républicaine (CIR) en France. Cette application vise à
+faciliter l’accès et l’analyse des informations pertinentes pour les
+utilisateurs et chercheurs intéressés par les politiques d’intégration.
+
+## Installation
+
+Vous pouvez installer une version de développement de minintCIR depuis
+[GitHub](https://github.com/) avec :
+
+``` r
+# install.packages("devtools")
+devtools::install_github("pds023/minintCIR")
+```
