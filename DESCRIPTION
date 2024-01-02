@@ -1,9 +1,13 @@
 Package: minintCIR
 Title: Contrats d'intégration républicaine
 Version: 0.0.0.9000
-Authors@R: person('Philippe', 'Fontaine', email = 'philippe.fontaine.ds@proton.me', role = c('cre', 'aut'))
-Description: Visualisation des contrats d'intégration républicaine en utilisant Shiny.
+Authors@R: 
+    person("Philippe", "Fontaine", , "philippe.fontaine.ds@proton.me", role = c("cre", "aut"))
+Description: Visualisation des contrats d'intégration républicaine en
+    utilisant Shiny.
 License: MIT + file LICENSE
+URL: https://github.com/pds023/minintCIR
+BugReports: https://github.com/pds023/minintCIR/issues
 Imports: 
     arrow,
     bsicons,
@@ -11,16 +15,13 @@ Imports:
     config (>= 0.3.2),
     data.table,
     DT,
-    esquisse,
     golem (>= 0.4.1),
     highcharter,
     janitor,
+    markdown,
     openxlsx,
-    pkgload,
     shiny (>= 1.8.0),
     shinyWidgets
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
-URL: https://github.com/pds023/minintCIR
-BugReports: https://github.com/pds023/minintCIR/issues
