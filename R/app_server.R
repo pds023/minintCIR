@@ -18,12 +18,60 @@ app_server <- function(input, output, session) {
   data_motif <- reactiveVal()
   data_parcours <- reactiveVal()
   filters_applied <- reactiveVal(FALSE)
+  nb_rating <- reactiveVal(0)
+  # forbid_rating <- reactiveVal(FALSE)
 
   data(read_parquet("data/data_2020.parquet"))
 
   output$cirmeth <- renderText({
     includeMarkdown("inst/app/www/cirmeth.md") # Remplacez par le chemin de votre fichier Markdown
   })
+  output$apropos <- renderText({
+    includeMarkdown("inst/app/www/apropos.md") # Remplacez par le chemin de votre fichier Markdown
+  })
+
+
+ output$ratings <- renderUI(shinyRatings("ratings_click", no_of_stars = 5, default = 5, disabled = FALSE))
+
+
+  observeEvent(input$ratings_click,{
+    if(nb_rating() > 0){
+    if(input$ratings_click >= 4){showModal(modalDialog("Merci pour cette bonne note ! N'hésitez pas à proposer des suggestions :)",
+                                                 easyClose = TRUE,size = "s"))
+    } else if(input$ratings_click >= 2.5){showModal(modalDialog("Merci pour ce retour ! N'hésitez pas à proposer des suggestions pour améliorer l'expérience utilisateur !",
+                                                          easyClose = TRUE,size = "s"))
+    } else{showModal(modalDialog("Merci pour ce retour, et toutes mes excuses pour l'expérience peu satisfaisante. N'hésitez pas à proposer des suggestions pour améliorer l'expérience utilisateur.",
+                                                          easyClose = TRUE,size = "s"))
+    }
+      write_parquet(as.data.table(cbind(as.Date(Sys.time()),input$ratings_click)),paste0("data/rating_",
+                                                                                gsub(
+                                                                                  pattern = " ",
+                                                                                  replacement = "-",
+                                                                                  x = gsub(pattern = ":",x = Sys.time(),replacement = "-"))))
+    }
+    nb_rating(nb_rating() + 1)
+  })
+
+  observeEvent(input$suggestions,{
+    showModal(modalDialog(
+      title = "Soumettre une suggestion",
+      textAreaInput(inputId = "suggestion_text",label = "Suggestion :",placeholder = "Merci de décrire votre suggestion"),
+      h5("Merci de ne pas renseigner d'informations personnelles dans ce champ. Les informations soumises sont enregistrées."),
+      footer = tagList(
+        modalButton("Annuler"),
+        actionButton("ok", "Envoyer")),
+      easyClose = TRUE)
+    )
+  })
+  observeEvent(input$ok,{
+    removeModal()
+    show_alert(title = "Merci pour votre suggestion !",type = "success")
+    write_parquet(as.data.table(cbind(as.Date(Sys.time()),input$suggestion_text)),paste0("data/suggestion_",
+                                                                              gsub(
+                                                                                pattern = " ",
+                                                                                replacement = "-",
+                                                                                x = gsub(pattern = ":",x = Sys.time(),replacement = "-"))))
+    })
 
   # Compute group by ----------------
 

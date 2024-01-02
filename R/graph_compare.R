@@ -31,7 +31,7 @@ graph_compare <- function(data,groupColumn,input_var,input_mod,input_pct){
         # Ajouter la colonne pour la variable comparée
         data_subset[, var_compare := input_mod[i]]
         # Ajouter la colonne en %
-        data_subset[,pct := N/sum(N)]
+        data_subset[,pct := round(N/sum(N),4)]
 
         # Ajouter le sous-ensemble à la liste
         data_list[[i]] <- data_subset

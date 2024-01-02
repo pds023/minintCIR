@@ -21,6 +21,7 @@ Imports:
     markdown,
     openxlsx,
     shiny (>= 1.8.0),
+    shinyRatings,
     shinyWidgets
 Encoding: UTF-8
 LazyData: true

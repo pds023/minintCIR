@@ -2,7 +2,7 @@
 #'
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
-#' @import shiny bslib highcharter bsicons shinyWidgets arrow markdown DT
+#' @import shiny bslib highcharter bsicons shinyWidgets arrow markdown DT shinyRatings
 #' @noRd
 app_ui <- function(request) {
   tagList(
@@ -58,10 +58,14 @@ app_ui <- function(request) {
   padding:3px;
   margin:10px;
 }
-
-
-
-  "))
+  ")),
+tags$head(
+  tags$style(HTML("
+      .rating__icon--star .fa {
+        font-size: 24px; /* Change size as needed */
+      }
+    "))
+)
         )),
       page_navbar(
         title=div(img(src="www/logopf.png", style="height:100px; width:100px;margin-bottom: -30px; border-radius: 50%"),
@@ -70,6 +74,9 @@ app_ui <- function(request) {
         nav_panel_exploration(),
         nav_menu_apropos(),
         nav_spacer(),
+        nav_item(actionBttn("suggestions",label = "Envoyez une suggestion",size = "xs")),
+        nav_menu("Notez-moi",
+                 nav_item(uiOutput("ratings"))),
         nav_item(input_dark_mode(mode = "light")),
         tags$style(".footer{position: fixed;bottom: 0;width: 100%;background-color: rgba(8, 60, 116, 1);color: white;text-align: center;padding: 5px;margin-left:-25px;}"),
         tags$style(".footer a{color: white;}"),

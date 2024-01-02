@@ -16,7 +16,7 @@ graph_explore <- function(data,
                           group = FALSE) {
   if(!group){
     colnames(data) <- c("var","N")
-    data[,pct := round(N/sum(N),2)]
+    data[,pct := round(N/sum(N),4)]
     if(input_switch){
       if(input_pct) {
         return(hchart(data, type = "bar",hcaes(x = var, y = N)))
@@ -29,7 +29,7 @@ graph_explore <- function(data,
     }
   } else {
     colnames(data) <- c("agreg","var","N")
-    data[,pct := round(N/sum(N),2)]
+    data[,pct := round(N/sum(N),4)]
     if(input_switch){
       if(input_pct) {
         return(hchart(data, type = "bar",hcaes(x = var, y = N, group = agreg)))

@@ -5,7 +5,7 @@ account: philippefontaine
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 10841576
-bundleId: 8078402
+bundleId: 8101435
 url: https://philippefontaine.shinyapps.io/minintCIR/
 version: 1
 asMultiple: FALSE
