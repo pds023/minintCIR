@@ -4,7 +4,7 @@ Cette application s'inscrit dans un de mes projets : **développer 100 applicati
 
 #### Qui suis-je?
 
-Je suis un data scientist expérimenté avec plus de huit ans d'expérience. Ma passion pour la data visualisation et le développement d'applications  me pousse à me lancer dans ce projet. Spécialisé en R et Python, j'ai une prédilection particulière pour Shiny, un outil puissant qui me permet de traduire des données brutes en histoires captivantes et en visualisations interactives. Mon parcours est jalonné de curiosité, d'apprentissage continu et d'un désir de partager le savoir avec la communauté.
+Je suis un data scientist expérimenté avec plus de huit ans d'expérience. Ma passion pour la data visualisation et le développement d'applications  me pousse à me lancer dans ce projet. Spécialisé en R et Python, j'ai une appétence particulière pour Shiny, un outil puissant qui me permet de traduire des données brutes en histoires captivantes et en visualisations interactives. Mon parcours est jalonné de curiosité, d'apprentissage continu et d'un désir de partager le savoir avec la communauté.
 
 #### Source des Données
 

@@ -6,6 +6,8 @@
 #' @noRd
 app_server <- function(input, output, session) {
 
+  options(warn = -1)
+
   # Params & load ----------------
   datarv <- reactiveValues()
   data <- reactiveVal()
@@ -43,6 +45,7 @@ app_server <- function(input, output, session) {
     } else{showModal(modalDialog("Merci pour ce retour, et toutes mes excuses pour l'expérience peu satisfaisante. N'hésitez pas à proposer des suggestions pour améliorer l'expérience utilisateur.",
                                                           easyClose = TRUE,size = "s"))
     }
+      print(input$ratings_click)
       write_parquet(as.data.table(cbind(as.Date(Sys.time()),input$ratings_click)),paste0("data/rating_",
                                                                                 gsub(
                                                                                   pattern = " ",
@@ -66,6 +69,7 @@ app_server <- function(input, output, session) {
   observeEvent(input$ok,{
     removeModal()
     show_alert(title = "Merci pour votre suggestion !",type = "success")
+    print(input$suggestion_text)
     write_parquet(as.data.table(cbind(as.Date(Sys.time()),input$suggestion_text)),paste0("data/suggestion_",
                                                                               gsub(
                                                                                 pattern = " ",
