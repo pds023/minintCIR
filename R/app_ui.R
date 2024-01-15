@@ -2,7 +2,7 @@
 #'
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
-#' @import shiny bslib highcharter bsicons shinyWidgets arrow markdown DT shinyRatings
+#' @import shiny bslib highcharter bsicons shinyWidgets arrow markdown DT shinyRatings aws.s3
 #' @noRd
 app_ui <- function(request) {
   tagList(
@@ -83,7 +83,7 @@ tags$head(
         footer = tags$div(
           class = "footer",
           "Développé par ",
-          tags$a(href = "https://www.linkedin.com/in/philippe-fontaine-ds/", target = "_blank", "Philippe Fontaine"))
+          tags$a(href = "https://www.philippefontaine.eu", target = "_blank", "Philippe Fontaine"))
       )
 
     )

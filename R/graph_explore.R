@@ -11,14 +11,14 @@
 #'
 #' @examples
 graph_explore <- function(data,
-                          input_switch,
+                          input_type,
                           input_pct,
                           group = FALSE) {
   if(!group){
     colnames(data) <- c("var","N")
     data[,pct := round(N/sum(N),4)]
-    if(input_switch){
-      if(input_pct) {
+    if(input_type %in% "bar"){
+      if(input_pct %in% "nb") {
         return(hchart(data, type = "bar",hcaes(x = var, y = N)))
       } else {
         return(hchart(data, type = "bar",hcaes(x = var, y = pct)))
@@ -30,8 +30,8 @@ graph_explore <- function(data,
   } else {
     colnames(data) <- c("agreg","var","N")
     data[,pct := round(N/sum(N),4)]
-    if(input_switch){
-      if(input_pct) {
+    if(input_type %in% "bar"){
+      if(input_pct %in% "nb") {
         return(hchart(data, type = "bar",hcaes(x = var, y = N, group = agreg)))
       } else {
         return(hchart(data, type = "bar",hcaes(x = var, y = pct, group = agreg)))

@@ -8,6 +8,8 @@ app_server <- function(input, output, session) {
 
   options(warn = -1)
 
+  source("set_cfg.R")
+
   # Params & load ----------------
   datarv <- reactiveValues()
   data <- reactiveVal()
@@ -23,7 +25,24 @@ app_server <- function(input, output, session) {
   nb_rating <- reactiveVal(0)
   # forbid_rating <- reactiveVal(FALSE)
 
-  data(read_parquet("data/data_2020.parquet"))
+
+  data(as.data.table(s3read_using(
+    read_parquet,
+    object = "data_2020.parquet",
+    bucket = "awsbucketpf/shinycir"
+  )))
+
+  ratings <- s3read_using(
+    read_parquet,
+    object = "ratings.parquet",
+    bucket = "awsbucketpf/shinycir"
+  )
+  suggestions <- s3read_using(
+    read_parquet,
+    object = "suggestions.parquet",
+    bucket = "awsbucketpf/shinycir"
+  )
+
 
   output$cirmeth <- renderText({
     includeMarkdown("inst/app/www/cirmeth.md") # Remplacez par le chemin de votre fichier Markdown
@@ -46,11 +65,13 @@ app_server <- function(input, output, session) {
                                                           easyClose = TRUE,size = "s"))
     }
       print(input$ratings_click)
-      write_parquet(as.data.table(cbind(as.Date(Sys.time()),input$ratings_click)),paste0("data/rating_",
-                                                                                gsub(
-                                                                                  pattern = " ",
-                                                                                  replacement = "-",
-                                                                                  x = gsub(pattern = ":",x = Sys.time(),replacement = "-"))))
+      ratings <- as.data.table(rbind(ratings,cbind(as.character(Sys.Date()),input$ratings_click)))
+      s3write_using(
+        x = ratings,
+        FUN = write_parquet,
+        object = "ratings.parquet",
+        bucket = "awsbucketpf/shinycir"
+      )
     }
     nb_rating(nb_rating() + 1)
   })
@@ -70,11 +91,13 @@ app_server <- function(input, output, session) {
     removeModal()
     show_alert(title = "Merci pour votre suggestion !",type = "success")
     print(input$suggestion_text)
-    write_parquet(as.data.table(cbind(as.Date(Sys.time()),input$suggestion_text)),paste0("data/suggestion_",
-                                                                              gsub(
-                                                                                pattern = " ",
-                                                                                replacement = "-",
-                                                                                x = gsub(pattern = ":",x = Sys.time(),replacement = "-"))))
+    suggestions <- as.data.table(rbind(suggestions,cbind(as.character(Sys.Date()),input$suggestion_text)))
+    s3write_using(
+      x = suggestions,
+      FUN = write_parquet,
+      object = "suggestions.parquet",
+      bucket = "awsbucketpf/shinycir"
+    )
     })
 
   # Compute group by ----------------
@@ -179,106 +202,52 @@ app_server <- function(input, output, session) {
 
   # Highcharts graphs tab1 ----------------
   observe({
-    req(input$highchart_stats_sexe_switch)
+    req(input$highchart_stats_sexe_type)
     req(input$highchart_stats_sexe_pct)
     output$highchart_stats_sexe <- renderHighchart(graph_explore(data = data_sexe(),
-                  input_switch = input$highchart_stats_sexe_switch,
+                  input_type = input$highchart_stats_sexe_type,
                   input_pct = input$highchart_stats_sexe_pct))
   })
 
   observe({
-    req(input$highchart_stats_pays_switch)
+    req(input$highchart_stats_pays_type)
     req(input$highchart_stats_pays_pct)
     output$highchart_stats_pays <- renderHighchart(graph_explore(data = data_pays(),
-                                                                 input_switch = input$highchart_stats_pays_switch,
+                                                                 input_type = input$highchart_stats_pays_type,
                                                                  input_pct = input$highchart_stats_pays_pct))
   })
   observe({
-    req(input$highchart_stats_age_switch)
+    req(input$highchart_stats_age_type)
     req(input$highchart_stats_age_pct)
     output$highchart_stats_age <- renderHighchart(graph_explore(data = data_age(),
-                                                                 input_switch = input$highchart_stats_age_switch,
+                                                                 input_type = input$highchart_stats_age_type,
                                                                  input_pct = input$highchart_stats_age_pct))
   })
   observe({
-    req(input$highchart_stats_parcours_switch)
+    req(input$highchart_stats_parcours_type)
     req(input$highchart_stats_parcours_pct)
     output$highchart_stats_parcours <- renderHighchart(graph_explore(data = data_parcours(),
-                                                                input_switch = input$highchart_stats_parcours_switch,
+                                                                input_type = input$highchart_stats_parcours_type,
                                                                 input_pct = input$highchart_stats_parcours_pct))
   })
 
   observe({
-    req(input$highchart_stats_territoire_switch)
+    req(input$highchart_stats_territoire_type)
     req(input$highchart_stats_territoire_pct)
     output$highchart_stats_territoire <- renderHighchart(graph_explore(data = data_territoire(),
-                                                                     input_switch = input$highchart_stats_territoire_switch,
+                                                                     input_type = input$highchart_stats_territoire_type,
                                                                      input_pct = input$highchart_stats_territoire_pct,
                                                                      group = TRUE))
   })
 
   observe({
-    req(input$highchart_stats_motif_switch)
+    req(input$highchart_stats_motif_type)
     req(input$highchart_stats_motif_pct)
     output$highchart_stats_motif <- renderHighchart(graph_explore(data = data_motif(),
-                                                                       input_switch = input$highchart_stats_motif_switch,
+                                                                       input_type = input$highchart_stats_motif_type,
                                                                        input_pct = input$highchart_stats_motif_pct,
                                                                        group = TRUE))
   })
-
-
-
-  # observe({
-  #   if(input$highchart_stats_parcours_switch){
-  #     output$highchart_stats_parcours <- renderHighchart(
-  #       hchart(data_parcours(), type = "bar",hcaes(x = parcours, y = N))
-  #     )
-  #   } else{
-  #     data_parcours_treemap <- data_to_hierarchical(data_parcours(), c("parcours", "N"))
-  #     output$highchart_stats_parcours <- renderHighchart(
-  #       hchart(data_parcours_treemap, type = "treemap"))
-  #   }
-  # })
-  # observe({
-  #   if(input$highchart_stats_pays_switch){
-  #     output$highchart_stats_pays <- renderHighchart(
-  #       hchart(data_pays(), type = "bar",hcaes(x = nationalite, y = N))
-  #     )}else{
-  #       data_pays_treemap <- data_to_hierarchical(data_pays(), c("nationalite", "N"))
-  #       output$highchart_stats_pays <- renderHighchart(
-  #         hchart(data_pays_treemap, type = "treemap")
-  #       )
-  #     }
-  # })
-  # observe({
-  #   if(input$highchart_stats_age_switch){
-  #     output$highchart_stats_age <- renderHighchart(
-  #       hchart(data_age(), type = "bar",hcaes(x = age_cat, y = N))
-  #     )
-  #   } else{
-  #     data_age_treemap <- data_to_hierarchical(data_age(), c("age_cat", "N"))
-  #     output$highchart_stats_age <- renderHighchart(
-  #       hchart(data_age_treemap, type = "treemap")
-  #     )
-  #   }
-  # })
-
-
-
-  # observe({
-  #   if(input$highchart_stats_motif_switch){
-  #     output$highchart_stats_motif <- renderHighchart(
-  #       hchart(data_motif(), type = "bar",hcaes(x = motif_det, y = N, group = motif_agreg))
-  #     )
-  #   } else {
-  #     data_motif_treemap <- data_to_hierarchical(data_motif(),group_vars =  c("motif_agreg", "motif_det"),
-  #                                                size_var = "N")
-  #     output$highchart_stats_motif <- renderHighchart(
-  #       hchart(data_motif_treemap, type = "treemap"))
-  #   }
-  # })
-
-
 
 
   observeEvent(input$variables_compare,{
