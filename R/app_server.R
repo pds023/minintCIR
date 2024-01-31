@@ -202,50 +202,50 @@ app_server <- function(input, output, session) {
 
   # Highcharts graphs tab1 ----------------
   observe({
-    req(input$highchart_stats_sexe_type)
-    req(input$highchart_stats_sexe_pct)
+    # req(input$highchart_stats_type)
+    # req(input$highchart_stats_pct)
     output$highchart_stats_sexe <- renderHighchart(graph_explore(data = data_sexe(),
-                  input_type = input$highchart_stats_sexe_type,
-                  input_pct = input$highchart_stats_sexe_pct))
+                  input_type = input$highchart_stats_type,
+                  input_pct = input$highchart_stats_pct))
   })
 
   observe({
-    req(input$highchart_stats_pays_type)
-    req(input$highchart_stats_pays_pct)
+    req(input$highchart_stats_type)
+    req(input$highchart_stats_pct)
     output$highchart_stats_pays <- renderHighchart(graph_explore(data = data_pays(),
-                                                                 input_type = input$highchart_stats_pays_type,
-                                                                 input_pct = input$highchart_stats_pays_pct))
+                                                                 input_type = input$highchart_stats_type,
+                                                                 input_pct = input$highchart_stats_pct))
   })
   observe({
-    req(input$highchart_stats_age_type)
-    req(input$highchart_stats_age_pct)
+    req(input$highchart_stats_type)
+    req(input$highchart_stats_pct)
     output$highchart_stats_age <- renderHighchart(graph_explore(data = data_age(),
-                                                                 input_type = input$highchart_stats_age_type,
-                                                                 input_pct = input$highchart_stats_age_pct))
+                                                                 input_type = input$highchart_stats_type,
+                                                                 input_pct = input$highchart_stats_pct))
   })
   observe({
-    req(input$highchart_stats_parcours_type)
-    req(input$highchart_stats_parcours_pct)
+    req(input$highchart_stats_type)
+    req(input$highchart_stats_pct)
     output$highchart_stats_parcours <- renderHighchart(graph_explore(data = data_parcours(),
-                                                                input_type = input$highchart_stats_parcours_type,
-                                                                input_pct = input$highchart_stats_parcours_pct))
+                                                                input_type = input$highchart_stats_type,
+                                                                input_pct = input$highchart_stats_pct))
   })
 
   observe({
-    req(input$highchart_stats_territoire_type)
-    req(input$highchart_stats_territoire_pct)
+    req(input$highchart_stats_type)
+    req(input$highchart_stats_pct)
     output$highchart_stats_territoire <- renderHighchart(graph_explore(data = data_territoire(),
-                                                                     input_type = input$highchart_stats_territoire_type,
-                                                                     input_pct = input$highchart_stats_territoire_pct,
+                                                                     input_type = input$highchart_stats_type,
+                                                                     input_pct = input$highchart_stats_pct,
                                                                      group = TRUE))
   })
 
   observe({
-    req(input$highchart_stats_motif_type)
-    req(input$highchart_stats_motif_pct)
+    req(input$highchart_stats_type)
+    req(input$highchart_stats_pct)
     output$highchart_stats_motif <- renderHighchart(graph_explore(data = data_motif(),
-                                                                       input_type = input$highchart_stats_motif_type,
-                                                                       input_pct = input$highchart_stats_motif_pct,
+                                                                       input_type = input$highchart_stats_type,
+                                                                       input_pct = input$highchart_stats_pct,
                                                                        group = TRUE))
   })
 
@@ -253,7 +253,7 @@ app_server <- function(input, output, session) {
   observeEvent(input$variables_compare,{
     req(input$variables_compare)
     if(length(input$variables_compare) > 0){
-      updatePickerInput(session = session,inputId = "modalites_compare",choices = c(unique(data()[,get(input$variables_compare)])),
+      updatePickerInput(session = session,inputId = "modalites_compare",choices = unique(data()[,get(input$variables_compare)]),
                         selected = NULL)
     }
   })
@@ -261,144 +261,102 @@ app_server <- function(input, output, session) {
   observe({
     req(input$variables_compare)
     req(input$modalites_compare)
-    req(input$highchart_compare_pays_pct)
+    req(input$highchart_compare_pct)
 
     if(!filters_applied()){
     output$highchart_compare_pays <- renderHighchart(
-      graph_compare(data(),"nationalite",input$variables_compare,input$modalites_compare,input$highchart_compare_pays_pct)
+      graph_compare(data(),"nationalite",input$variables_compare,input$modalites_compare,input$highchart_compare_pct)
       )
     } else{
       output$highchart_compare_pays <- renderHighchart(
-        graph_compare(data_filtered(),"nationalite",input$variables_compare,input$modalites_compare,input$highchart_compare_pays_pct)
+        graph_compare(data_filtered(),"nationalite",input$variables_compare,input$modalites_compare,input$highchart_compare_pct)
       )
     }
   })
   observe({
     req(input$variables_compare)
     req(input$modalites_compare)
-    req(input$highchart_compare_sexe_pct)
+    req(input$highchart_compare_pct)
     if(!filters_applied()){
     output$highchart_compare_sexe <- renderHighchart(
-      graph_compare(data(),"sexe",input$variables_compare,input$modalites_compare,input$highchart_compare_sexe_pct)
+      graph_compare(data(),"sexe",input$variables_compare,input$modalites_compare,input$highchart_compare_pct)
     )
     } else {
       output$highchart_compare_sexe <- renderHighchart(
-        graph_compare(data_filtered(),"sexe",input$variables_compare,input$modalites_compare,input$highchart_compare_sexe_pct)
+        graph_compare(data_filtered(),"sexe",input$variables_compare,input$modalites_compare,input$highchart_compare_pct)
       )
     }
   })
   observe({
     req(input$variables_compare)
     req(input$modalites_compare)
-    req(input$highchart_compare_age_pct)
+    req(input$highchart_compare_pct)
     if(!filters_applied()){
     output$highchart_compare_age <- renderHighchart(
-      graph_compare(data(),"age_cat",input$variables_compare,input$modalites_compare,input$highchart_compare_age_pct)
+      graph_compare(data(),"age_cat",input$variables_compare,input$modalites_compare,input$highchart_compare_pct)
     )
     } else {
       output$highchart_compare_age <- renderHighchart(
-        graph_compare(data_filtered(),"age_cat",input$variables_compare,input$modalites_compare,input$highchart_compare_age_pct)
+        graph_compare(data_filtered(),"age_cat",input$variables_compare,input$modalites_compare,input$highchart_compare_pct)
       )
     }
   })
   observe({
     req(input$variables_compare)
     req(input$modalites_compare)
-    req(input$highchart_compare_territoire_pct)
+    req(input$highchart_compare_pct)
     if(!filters_applied()){
     output$highchart_compare_territoire <- renderHighchart(
-      graph_compare(data(),"departement",input$variables_compare,input$modalites_compare,input$highchart_compare_territoire_pct)
+      graph_compare(data(),"departement",input$variables_compare,input$modalites_compare,input$highchart_compare_pct)
     )
     } else {
       output$highchart_compare_territoire <- renderHighchart(
-        graph_compare(data_filtered(),"departement",input$variables_compare,input$modalites_compare,input$highchart_compare_territoire_pct)
+        graph_compare(data_filtered(),"departement",input$variables_compare,input$modalites_compare,input$highchart_compare_pct)
       )
     }
   })
   observe({
     req(input$variables_compare)
     req(input$modalites_compare)
-    req(input$highchart_compare_motif_pct)
+    req(input$highchart_compare_pct)
     if(!filters_applied()){
     output$highchart_compare_motif <- renderHighchart(
-      graph_compare(data(),"motif_det",input$variables_compare,input$modalites_compare,input$highchart_compare_motif_pct)
+      graph_compare(data(),"motif_det",input$variables_compare,input$modalites_compare,input$highchart_compare_pct)
     )
     } else {
       output$highchart_compare_motif <- renderHighchart(
-        graph_compare(data_filtered(),"motif_det",input$variables_compare,input$modalites_compare,input$highchart_compare_motif_pct)
+        graph_compare(data_filtered(),"motif_det",input$variables_compare,input$modalites_compare,input$highchart_compare_pct)
       )
     }
   })
   observe({
     req(input$variables_compare)
     req(input$modalites_compare)
-    req(input$highchart_compare_parcours_pct)
+    req(input$highchart_compare_pct)
     if(!filters_applied()){
     output$highchart_compare_parcours <- renderHighchart(
-      graph_compare(data(),"parcours",input$variables_compare,input$modalites_compare,input$highchart_compare_parcours_pct)
+      graph_compare(data(),"parcours",input$variables_compare,input$modalites_compare,input$highchart_compare_pct)
     )
     } else {
       output$highchart_compare_parcours <- renderHighchart(
-        graph_compare(data_filtered(),"parcours",input$variables_compare,input$modalites_compare,input$highchart_compare_parcours_pct)
+        graph_compare(data_filtered(),"parcours",input$variables_compare,input$modalites_compare,input$highchart_compare_pct)
       )
     }
   })
 
   observe({
     if(!filters_applied()){
-      output$exploration_donnees_brutes <- renderDT(
-        data(),
-        filter = 'top',
-        fillContainer = TRUE,
-        extensions = c('Responsive'),options = list(
-          pageLength = 15, autoWidth = TRUE,
-          language = list(
-            info = 'Affichage de _START_ à _END_ résultats sur _TOTAL_',
-            paginate = list(previous = 'Précédent', `next` = 'Suivant'),
-            lengthMenu = "Afficher _MENU_ résultats",
-            search = "Recherche"
-          )
-        ))
+      output$exploration_donnees_brutes <- create_dt(data(),length = 15,cols_names = NULL,select_cols = FALSE)
     } else{
-      output$exploration_donnees_brutes <- renderDT(
-        data_filtered(),
-        filter = 'top',
-        fillContainer = TRUE,
-        extensions = c('Responsive'),options = list(
-          pageLength = 15, autoWidth = TRUE,
-          language = list(
-            info = 'Affichage de _START_ à _END_ résultats sur _TOTAL_',
-            paginate = list(previous = 'Précédent', `next` = 'Suivant'),
-            lengthMenu = "Afficher _MENU_ résultats",
-            search = "Recherche"
-          )
-        ))
+      output$exploration_donnees_brutes <- create_dt(data_filtered(),length = 15,cols_names = NULL,select_cols = FALSE)
     }
   })
 
   observe({
     if(!filters_applied()){
-      output$downloadData <- downloadHandler(
-        filename = function() {
-          # Use the selected dataset as the suggested file name
-          "data_2020.csv"
-        },
-        content = function(file) {
-          # Write the dataset to the `file` that will be downloaded
-          write.csv(data(), file)
-        }
-      )
+      output$downloadData <- dl_button_serv(data = data(),label = "data_2020")
     } else {
-      output$downloadData <- downloadHandler(
-        filename = function() {
-          # Use the selected dataset as the suggested file name
-          "data_filtered_2020.csv"
-        },
-        content = function(file) {
-          # Write the dataset to the `file` that will be downloaded
-          write.csv(data_filtered(), file)
-        }
-      )
+      output$downloadData <- dl_button_serv(data = data_filtered(),label = "data_filtered_2020")
     }
   })
 }

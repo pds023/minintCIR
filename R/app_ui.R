@@ -68,9 +68,7 @@ tags$head(
 )
         )),
       page_navbar(
-        title=div(img(src="www/logopf.png", style="height:100px; width:100px;margin-bottom: -30px; border-radius: 50%"),
-                  img(src="www/logoapp.png", style="height:100px; width:100px;margin-bottom: -30px; margin-right:30px; border-radius: 50%"),
-                  ""),
+        title="ShinyCIR",
         nav_panel_exploration(),
         nav_menu_apropos(),
         nav_spacer(),
