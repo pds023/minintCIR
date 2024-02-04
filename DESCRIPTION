@@ -22,6 +22,7 @@ Imports:
     markdown,
     openxlsx,
     shiny (>= 1.8.0),
+    shinycssloaders,
     shinyRatings,
     shinyWidgets
 Encoding: UTF-8

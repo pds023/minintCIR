@@ -44,7 +44,7 @@ graph_compare <- function(data,groupColumn,input_var,input_mod,input_pct){
     data_graph <- rbindlist(data_list)
 
     # Affichage du graphique
-    if(input_pct %in% "nb"){
+    if(input_pct %in% "niv"){
     return(hchart(data_graph, type = "column", hcaes(x = var, y = "N", group = "var_compare")))
     } else{
       return(hchart(data_graph, type = "column", hcaes(x = var, y = "pct", group = "var_compare")))

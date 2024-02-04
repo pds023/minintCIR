@@ -11,6 +11,7 @@ app_ui <- function(request) {
     # Your application UI logic
     page_fluid(
       theme =  bs_theme(),
+      includeCSS("inst/app/www/styles.css"),
       list(tags$head(HTML('<link rel="icon", href="www/logoapp.png",
                                    type="image/png" />')),
            tags$head(
@@ -23,58 +24,16 @@ app_ui <- function(request) {
                 font-family: 'Marianne', sans-serif;
             }
         "))
-           ),
-        tags$head(
-          tags$style(HTML("hr {border-top: 1px solid #000000;}"))),
-        tags$head(
-          tags$style(HTML("
-
-    #imports_save:hover, #exploration_filters_save:hover, #exploration_filters_confirm:hover, #exploration_atypiques_confirm:hover {
-                background-color: #083c74;
-                color: #FFFFFF;
-    }
-    #imports_mapping:hover, #exploration_profil_edit:hover {
-                background-color: #a08b68;
-                color: #FFFFFF;
-    }
-
-
-    #imports_data_delete:hover, #exploration_data_delete:hover, #exploration_filters_reset:hover, #exploration_profil_delete:hover, #exploration_atypiques_reset:hover {
-                background-color: #9f0025;
-                color: #FFFFFF;
-    }
-
-
-.navbar.navbar-default.navbar-static-top.navbar-inverse{
-  border-radius:15px;margin-top:5px;
-}
-.nav-item {
-  margin-top:auto;
-  margin-bottom:auto;
-  padding: 5px;
-}
-.accordion-flush .accordion-item{
-  border-radius:15px;
-  padding:3px;
-  margin:10px;
-}
-  ")),
-tags$head(
-  tags$style(HTML("
-      .rating__icon--star .fa {
-        font-size: 24px; /* Change size as needed */
-      }
-    "))
-)
-        )),
+           )),
       page_navbar(
         title="ShinyCIR",
         nav_panel_exploration(),
         nav_menu_apropos(),
         nav_spacer(),
-        nav_item(actionBttn("suggestions",label = "Envoyez une suggestion",size = "xs")),
-        nav_menu("Notez-moi",
-                 nav_item(uiOutput("ratings"))),
+        nav_item(actionButton(inputId = "suggestions",label = "Une suggestion ?")),
+        nav_item(tags$a(shiny::icon("github"), "minintCIR", href = "https://github.com/pds023/minintCIR", target = "_blank")),
+        nav_item(tags$a(shiny::icon("linkedin"), "philippe-fontaine-ds", href = "https://www.linkedin.com/in/philippe-fontaine-ds/", target = "_blank")),
+
         nav_item(input_dark_mode(mode = "light")),
         tags$style(".footer{position: fixed;bottom: 0;width: 100%;background-color: rgba(8, 60, 116, 1);color: white;text-align: center;padding: 5px;margin-left:-25px;}"),
         tags$style(".footer a{color: white;}"),

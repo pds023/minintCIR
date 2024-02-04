@@ -15,8 +15,8 @@ sidebar_exploration <- function() {
                               create_picker(id = "exploration_filter_motif_agreg", label = "Motif (niv1) :"),
                               create_picker(id = "exploration_filter_motif_det", label = "Motif (niv2) :"),
                               create_picker(id = "exploration_filter_parcours", label = "Parcours :"),
-                              actionButton(inputId = "exploration_filters_apply",label = "Appliquer"),
-                              actionButton(inputId = "exploration_filters_reset",label = "Réinitialiser")
+                              actionButton(inputId = "exploration_filters_apply",label = "Appliquer",width = "100%"),
+                              actionButton(inputId = "exploration_filters_reset",label = "Réinitialiser",width = "100%")
     ))
   })
 }

@@ -32,11 +32,6 @@ app_server <- function(input, output, session) {
     bucket = "awsbucketpf/shinycir"
   )))
 
-  ratings <- s3read_using(
-    read_parquet,
-    object = "ratings.parquet",
-    bucket = "awsbucketpf/shinycir"
-  )
   suggestions <- s3read_using(
     read_parquet,
     object = "suggestions.parquet",
@@ -52,29 +47,6 @@ app_server <- function(input, output, session) {
   })
 
 
- output$ratings <- renderUI(shinyRatings("ratings_click", no_of_stars = 5, default = 5, disabled = FALSE))
-
-
-  observeEvent(input$ratings_click,{
-    if(nb_rating() > 0){
-    if(input$ratings_click >= 4){showModal(modalDialog("Merci pour cette bonne note ! N'hésitez pas à proposer des suggestions :)",
-                                                 easyClose = TRUE,size = "s"))
-    } else if(input$ratings_click >= 2.5){showModal(modalDialog("Merci pour ce retour ! N'hésitez pas à proposer des suggestions pour améliorer l'expérience utilisateur !",
-                                                          easyClose = TRUE,size = "s"))
-    } else{showModal(modalDialog("Merci pour ce retour, et toutes mes excuses pour l'expérience peu satisfaisante. N'hésitez pas à proposer des suggestions pour améliorer l'expérience utilisateur.",
-                                                          easyClose = TRUE,size = "s"))
-    }
-      print(input$ratings_click)
-      ratings <- as.data.table(rbind(ratings,cbind(as.character(Sys.Date()),input$ratings_click)))
-      s3write_using(
-        x = ratings,
-        FUN = write_parquet,
-        object = "ratings.parquet",
-        bucket = "awsbucketpf/shinycir"
-      )
-    }
-    nb_rating(nb_rating() + 1)
-  })
 
   observeEvent(input$suggestions,{
     showModal(modalDialog(
@@ -202,47 +174,32 @@ app_server <- function(input, output, session) {
 
   # Highcharts graphs tab1 ----------------
   observe({
-    # req(input$highchart_stats_type)
-    # req(input$highchart_stats_pct)
     output$highchart_stats_sexe <- renderHighchart(graph_explore(data = data_sexe(),
                   input_type = input$highchart_stats_type,
                   input_pct = input$highchart_stats_pct))
   })
-
   observe({
-    req(input$highchart_stats_type)
-    req(input$highchart_stats_pct)
     output$highchart_stats_pays <- renderHighchart(graph_explore(data = data_pays(),
                                                                  input_type = input$highchart_stats_type,
                                                                  input_pct = input$highchart_stats_pct))
   })
   observe({
-    req(input$highchart_stats_type)
-    req(input$highchart_stats_pct)
     output$highchart_stats_age <- renderHighchart(graph_explore(data = data_age(),
                                                                  input_type = input$highchart_stats_type,
                                                                  input_pct = input$highchart_stats_pct))
   })
   observe({
-    req(input$highchart_stats_type)
-    req(input$highchart_stats_pct)
     output$highchart_stats_parcours <- renderHighchart(graph_explore(data = data_parcours(),
                                                                 input_type = input$highchart_stats_type,
                                                                 input_pct = input$highchart_stats_pct))
   })
-
   observe({
-    req(input$highchart_stats_type)
-    req(input$highchart_stats_pct)
     output$highchart_stats_territoire <- renderHighchart(graph_explore(data = data_territoire(),
                                                                      input_type = input$highchart_stats_type,
                                                                      input_pct = input$highchart_stats_pct,
                                                                      group = TRUE))
   })
-
   observe({
-    req(input$highchart_stats_type)
-    req(input$highchart_stats_pct)
     output$highchart_stats_motif <- renderHighchart(graph_explore(data = data_motif(),
                                                                        input_type = input$highchart_stats_type,
                                                                        input_pct = input$highchart_stats_pct,
@@ -359,6 +316,32 @@ app_server <- function(input, output, session) {
       output$downloadData <- dl_button_serv(data = data_filtered(),label = "data_filtered_2020")
     }
   })
-}
+
+
+
+  observe({
+    req(input$highchart_stats_type)
+    if(input$highchart_stats_type %in% "pie"){
+      updateRadioGroupButtons(session = session,inputId = "highchart_stats_pct", selected = "niv",disabled = TRUE)
+    } else{
+      updateRadioGroupButtons(session = session,inputId = "highchart_stats_pct",disabled = FALSE)
+    }
+  })
+
+  observe({
+    print(input$modalites_compare)
+    if(is.null(input$modalites_compare)){
+      updateRadioGroupButtons(session = session,inputId = "highchart_compare_pct",disabled = TRUE)
+    } else{
+      updateRadioGroupButtons(session = session,inputId = "highchart_compare_pct",disabled = FALSE)
+    }
+
+  })
+
+
+
+  }
+
+
 
 
