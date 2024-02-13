@@ -5,7 +5,6 @@
 #'
 #' @return
 #' @export
-#' @import  shinycssloaders
 #' @examples
 nav_panel_exploration <- function() {
   return(nav_panel("Exploration",icon = bs_icon("search"),
@@ -13,7 +12,7 @@ nav_panel_exploration <- function() {
                                nav_panel("Vue d'ensemble",icon = bs_icon("clipboard2-data"),value = "panel_exploration_vue_densemble",
                                          card(full_screen = TRUE,fill = F,
                                            card_title(div(class = "card-title-container",
-                                                          div(class = "title-tooltip","Éléments descriptif",
+                                                          div(class = "title-tooltip","Éléments descriptifs",
                                                               tooltip(
                                                                 bs_icon("info-circle"),
                                                                 "Nombre de CIR en niveau (#) et en part du total (%). Les filtres réalisés s'appliquent aux graphiques."
@@ -22,17 +21,17 @@ nav_panel_exploration <- function() {
                                                               create_radio("highchart_stats_pct","pct")))),
                                            card_body(navset_card_underline(
                                                                nav_panel(title = "Pays de nationalité",
-                                                                         withSpinner(highchartOutput("highchart_stats_pays"))),
+                                                                         highchartOutput("highchart_stats_pays")),
                                                                nav_panel(title = "Sexe",
-                                                                         withSpinner(highchartOutput("highchart_stats_sexe"))),
+                                                                         highchartOutput("highchart_stats_sexe")),
                                                                nav_panel(title = "Tranche d'âge",
-                                                                         withSpinner(highchartOutput("highchart_stats_age"))),
+                                                                         highchartOutput("highchart_stats_age")),
                                                                nav_panel(title = "Territoire",
-                                                                         withSpinner(highchartOutput("highchart_stats_territoire"))),
+                                                                         highchartOutput("highchart_stats_territoire")),
                                                                nav_panel(title = "Motif",
-                                                                         withSpinner(highchartOutput("highchart_stats_motif"))),
+                                                                         highchartOutput("highchart_stats_motif")),
                                                                nav_panel(title = "Parcours",
-                                                                         withSpinner(highchartOutput("highchart_stats_parcours")))
+                                                                         highchartOutput("highchart_stats_parcours"))
                                            )),
                                            card_footer(create_radio("highchart_stats_type","graph")))
                                ),
@@ -55,17 +54,17 @@ nav_panel_exploration <- function() {
                                                ),
                                                navset_card_underline(
                                                  nav_panel(title = "Pays de nationalité",
-                                                           withSpinner(highchartOutput("highchart_compare_pays"))),
+                                                           highchartOutput("highchart_compare_pays")),
                                                  nav_panel(title = "Sexe",
-                                                           withSpinner(highchartOutput("highchart_compare_sexe"))),
+                                                           highchartOutput("highchart_compare_sexe")),
                                                  nav_panel(title = "Tranche d'âge",
-                                                           withSpinner(highchartOutput("highchart_compare_age"))),
+                                                           highchartOutput("highchart_compare_age")),
                                                  nav_panel(title = "Territoire",
-                                                           withSpinner(highchartOutput("highchart_compare_territoire"))),
+                                                           highchartOutput("highchart_compare_territoire")),
                                                  nav_panel(title = "Motif",
-                                                           withSpinner(highchartOutput("highchart_compare_motif"))),
+                                                           highchartOutput("highchart_compare_motif")),
                                                  nav_panel(title = "Parcours",
-                                                           withSpinner(highchartOutput("highchart_compare_parcours")))))
+                                                           highchartOutput("highchart_compare_parcours"))))
                                            )
                                          )),
                                nav_panel("Données brutes",icon = bs_icon("database"),

@@ -2,7 +2,7 @@
 #'
 #' @param request Internal parameter for `{shiny}`.
 #'     DO NOT REMOVE.
-#' @import shiny bslib highcharter bsicons shinyWidgets arrow markdown DT shinyRatings aws.s3
+#' @import shiny bslib highcharter bsicons waiter sever shinyWidgets arrow markdown DT aws.s3
 #' @noRd
 app_ui <- function(request) {
   tagList(
@@ -11,6 +11,15 @@ app_ui <- function(request) {
     # Your application UI logic
     page_fluid(
       theme =  bs_theme(),
+      useSever(),
+      useWaiter(),
+      autoWaiter(html =  spin_dots(),color = "#FFF"),
+      waiterPreloader(color = "#000",
+                      html =  tagList(
+                        spin_dots(),
+                        tags$style(".waiter-overlay-content { display: flex; flex-direction: column; align-items: center; } .my-custom-space { margin-top: 40px; }"), # CSS personnalisé pour l'espacement
+                        div(class = "my-custom-space", h4("Chargement, veuillez patienter...")) # Texte avec espace personnalisé
+                      )),
       includeCSS("inst/app/www/styles.css"),
       list(tags$head(HTML('<link rel="icon", href="www/logoapp.png",
                                    type="image/png" />')),
@@ -35,7 +44,7 @@ app_ui <- function(request) {
         nav_item(tags$a(shiny::icon("linkedin"), "philippe-fontaine-ds", href = "https://www.linkedin.com/in/philippe-fontaine-ds/", target = "_blank")),
 
         nav_item(input_dark_mode(mode = "light")),
-        tags$style(".footer{position: fixed;bottom: 0;width: 100%;background-color: rgba(8, 60, 116, 1);color: white;text-align: center;padding: 5px;margin-left:-25px;}"),
+        tags$style(".footer{position: fixed;bottom: 0;width: 100%;background-color: rgba(8, 60, 116, 1);color: white;text-align: center;padding: 5px;margin-left:-25px;z-index:100;}"),
         tags$style(".footer a{color: white;}"),
         footer = tags$div(
           class = "footer",

@@ -8,6 +8,7 @@ app_server <- function(input, output, session) {
 
   options(warn = -1)
 
+
   source("set_cfg.R")
 
   # Params & load ----------------
@@ -303,9 +304,9 @@ app_server <- function(input, output, session) {
 
   observe({
     if(!filters_applied()){
-      output$exploration_donnees_brutes <- create_dt(data(),length = 15,cols_names = NULL,select_cols = FALSE)
+      output$exploration_donnees_brutes <- create_dt(data(),length = 15,cols_names = colnames(data()),select_cols = FALSE)
     } else{
-      output$exploration_donnees_brutes <- create_dt(data_filtered(),length = 15,cols_names = NULL,select_cols = FALSE)
+      output$exploration_donnees_brutes <- create_dt(data_filtered(),length = 15,cols_names = colnames(data_filtered()),select_cols = FALSE)
     }
   })
 
@@ -337,6 +338,14 @@ app_server <- function(input, output, session) {
     }
 
   })
+
+  disconnected <- tagList(
+    h1("Oups, quelque chose s'est mal passé !"),
+    p("Il semble que vous ayez été déconnecté. Veuillez rafraîchir la page ou revenir plus tard."),
+    reload_button("Rafraîchir", class = "warning")
+  )
+  sever(html = disconnected, bg_color = "#000")
+
 
 
 
