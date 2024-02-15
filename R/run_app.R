@@ -5,6 +5,7 @@
 #' @inheritParams shiny::shinyApp
 #'
 #' @export
+#' @import shiny.telemetry
 #' @importFrom shiny shinyApp
 #' @importFrom golem with_golem_options
 run_app <- function(
@@ -14,6 +15,8 @@ run_app <- function(
   uiPattern = "/",
   ...
 ) {
+  telemetry <<- Telemetry$new(app_name = "(minintCIR)",
+                               data_storage = DataStorageSQLite$new(db_path = file.path("telemetry.sqlite")))
   with_golem_options(
     app = shinyApp(
       ui = app_ui,

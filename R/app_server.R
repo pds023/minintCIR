@@ -8,8 +8,18 @@ app_server <- function(input, output, session) {
 
   options(warn = -1)
 
+  telemetry$start_session(track_values = TRUE)
 
   source("set_cfg.R")
+
+  session$onSessionEnded(function() {
+    put_object(
+      file = "telemetry.sqlite",
+      bucket = "awsbucketpf/shinycir",
+      object = "telemetry.sqlite"
+    )
+  })
+
 
   # Params & load ----------------
   datarv <- reactiveValues()

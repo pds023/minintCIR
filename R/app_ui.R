@@ -11,6 +11,7 @@ app_ui <- function(request) {
     # Your application UI logic
     page_fluid(
       theme =  bs_theme(),
+      use_telemetry(),
       useSever(),
       useWaiter(),
       autoWaiter(html =  spin_dots(),color = "#FFF"),

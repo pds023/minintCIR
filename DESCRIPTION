@@ -23,6 +23,7 @@ Imports:
     openxlsx,
     sever,
     shiny (>= 1.8.0),
+    shiny.telemetry,
     shinyWidgets,
     waiter
 Encoding: UTF-8
