@@ -1,29 +1,37 @@
-#' Title
+#' Cree un pickerInput avec configuration francaise
 #'
-#' @return
+#' Wrapper autour de shinyWidgets::pickerInput avec les textes en francais
+#' et la recherche en direct activee.
+#'
+#' @param id Identifiant du widget.
+#' @param label Label affiche.
+#' @param choices Vecteur de choix.
+#' @param multiple Autoriser la selection multiple.
+#' @param selected Valeur(s) selectionnee(s) par defaut.
+#' @param select_all Afficher les boutons "Tout selectionner / deselectionner".
+#'
+#' @return Un tag shiny pickerInput.
 #' @export
-#'
-#' @examples
-create_picker <- function(id, label = NULL, choices = c(), multiple = TRUE, selected = NULL,
-                          select_all = TRUE) {
-  if(select_all){
-    pickerInput(inputId = id, label = label,choices = choices,multiple = multiple,selected = selected,
-                options = pickerOptions(noneSelectedText = "Aucune sélection",
-                                        liveSearch = TRUE,
-                                        container = "body",
-                                        actionsBox = select_all,
-                                        size = 5,
-                                        deselectAllText = "Tout déselectionner",
-                                        liveSearchNormalize = TRUE,
-                                        noneResultsText = "Aucun résultat",
-                                        selectAllText = "Tout sélectionner"))
-  } else{
-    pickerInput(inputId = id, label = label,choices = choices,multiple = multiple,selected = selected,
-                options = pickerOptions(noneSelectedText = "Aucune sélection",
-                                        liveSearch = TRUE,
-                                        container = "body",
-                                        size = 5,
-                                        liveSearchNormalize = TRUE,
-                                        noneResultsText = "Aucun résultat"))
-  }
+create_picker <- function(id, label = NULL, choices = c(), multiple = TRUE,
+                          selected = NULL, select_all = TRUE) {
+  opts <- pickerOptions(
+    noneSelectedText = "Aucune selection",
+    liveSearch = TRUE,
+    container = "body",
+    actionsBox = select_all,
+    size = 5,
+    liveSearchNormalize = TRUE,
+    noneResultsText = "Aucun resultat",
+    deselectAllText = "Tout deselectionner",
+    selectAllText = "Tout selectionner"
+  )
+
+  pickerInput(
+    inputId = id,
+    label = label,
+    choices = choices,
+    multiple = multiple,
+    selected = selected,
+    options = opts
+  )
 }
