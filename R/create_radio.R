@@ -1,39 +1,42 @@
-#' Title
+#' Cree un groupe de boutons radio
 #'
-#' @param id
+#' Wrapper autour de shinyWidgets::radioGroupButtons avec des presets
+#' pour differents types de boutons (unite, pourcentage, type de graphique).
 #'
-#' @return
+#' @param id Identifiant du widget.
+#' @param type Type de radio : "unite", "pct" ou "graph".
+#' @param disabled_state Etat desactive initial.
+#'
+#' @return Un tag shiny radioGroupButtons.
 #' @export
-#'
-#' @examples
-create_radio <- function(id,type,disabled_state = FALSE) {
-  if(type %in% "unite"){
-    return(radioGroupButtons(
-      inputId = id,
-      label = NULL,
+create_radio <- function(id, type, disabled_state = FALSE) {
+  radio_configs <- list(
+    unite = list(
       choices = c(`<i class="fa-solid fa-cube"></i>` = "nb",
                   `<i class="fa-solid fa-euro-sign"></i>` = "val"),
-      selected = "val",
-      justified = FALSE,
-      disabled = disabled_state
-    ))
-  } else if(type %in% "pct"){
-    return(radioGroupButtons(
-      inputId = id,
-      label = NULL,
+      selected = "val"
+    ),
+    pct = list(
       choices = c(`<i class="fa-solid fa-hashtag"></i>` = "niv",
                   `<i class="fa-solid fa-percent"></i>` = "percent"),
-      justified = FALSE,
-      disabled = disabled_state
-    ))
-  } else if(type %in% "graph"){
-    return(radioGroupButtons(
-      inputId = id,
-      label = NULL,
+      selected = character(0)
+    ),
+    graph = list(
       choices = c(`<i class='fa fa-bar-chart'></i>` = "bar",
                   `<i class='fa fa-pie-chart'></i>` = "pie"),
-      justified = FALSE,
-      disabled = disabled_state
-    ))
-  }
+      selected = character(0)
+    )
+  )
+
+  cfg <- radio_configs[[type]]
+  if (is.null(cfg)) return(NULL)
+
+  radioGroupButtons(
+    inputId = id,
+    label = NULL,
+    choices = cfg$choices,
+    selected = if (length(cfg$selected) > 0) cfg$selected else character(0),
+    justified = FALSE,
+    disabled = disabled_state
+  )
 }

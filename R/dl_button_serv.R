@@ -1,16 +1,15 @@
-
-#' Title
+#' Handler de telechargement CSV
 #'
-#' @param variables
+#' Retourne un downloadHandler pour exporter des donnees en CSV.
 #'
-#' @return
+#' @param data Donnees a exporter.
+#' @param label Nom du fichier (sans extension).
+#'
+#' @return Un objet downloadHandler.
 #' @export
-#'
-#' @examples
-dl_button_serv <- function(data,label) {
+dl_button_serv <- function(data, label) {
   downloadHandler(
-    filename = function(){paste0(label,".csv")},
-    content = function(file){write.csv(data,file,row.names = FALSE)}
+    filename = function() paste0(label, ".csv"),
+    content = function(file) write.csv(data, file, row.names = FALSE)
   )
-
 }

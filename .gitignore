@@ -6,3 +6,4 @@
 .quarto
 .Renviron.sh
 set_cfg.R
+telemetry.sqlite

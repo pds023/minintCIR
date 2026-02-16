@@ -1,22 +1,23 @@
-#' Title
+#' Barre laterale de filtres pour l'exploration
 #'
-#' @return
+#' Genere dynamiquement la sidebar avec les filtres de l'onglet Exploration.
+#'
+#' @return Un objet renderUI contenant l'accordion de filtres.
 #' @export
-#'
-#' @examples
 sidebar_exploration <- function() {
   renderUI({
-    accordion(accordion_panel(title = "Filtrer",icon = icon("filter"),
-                              create_picker(id = "exploration_filter_sexe", label = "Sexe :"),
-                              create_picker(id = "exploration_filter_pays", label = "Pays :"),
-                              create_picker(id = "exploration_filter_age", label = "Age :"),
-                              create_picker(id = "exploration_filter_region", label = "Région :"),
-                              create_picker(id = "exploration_filter_departement", label = "Département :"),
-                              create_picker(id = "exploration_filter_motif_agreg", label = "Motif (niv1) :"),
-                              create_picker(id = "exploration_filter_motif_det", label = "Motif (niv2) :"),
-                              create_picker(id = "exploration_filter_parcours", label = "Parcours :"),
-                              actionButton(inputId = "exploration_filters_apply",label = "Appliquer",width = "100%"),
-                              actionButton(inputId = "exploration_filters_reset",label = "Réinitialiser",width = "100%")
+    accordion(accordion_panel(
+      title = "Filtrer", icon = icon("filter"),
+      create_picker(id = "exploration_filter_sexe", label = "Sexe :"),
+      create_picker(id = "exploration_filter_pays", label = "Pays :"),
+      create_picker(id = "exploration_filter_age", label = "Age :"),
+      create_picker(id = "exploration_filter_region", label = "Region :"),
+      create_picker(id = "exploration_filter_departement", label = "Departement :"),
+      create_picker(id = "exploration_filter_motif_agreg", label = "Motif (niv1) :"),
+      create_picker(id = "exploration_filter_motif_det", label = "Motif (niv2) :"),
+      create_picker(id = "exploration_filter_parcours", label = "Parcours :"),
+      actionButton(inputId = "exploration_filters_apply", label = "Appliquer", width = "100%"),
+      actionButton(inputId = "exploration_filters_reset", label = "Reinitialiser", width = "100%")
     ))
   })
 }

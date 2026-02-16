@@ -1,17 +1,20 @@
-#' Title
+#' Pretraitement des donnees CIR
 #'
-#' @param data_cir
+#' Charge un fichier Excel brut, nettoie les noms de colonnes
+#' et sauvegarde en format Parquet.
 #'
-#' @return
+#' @param pathCIR Chemin vers le fichier Excel source.
+#'
+#' @return Invisible NULL. Le fichier Parquet est ecrit sur disque.
 #' @export
 #' @import data.table openxlsx janitor arrow
-#' @examples
 preprocess <- function(pathCIR = "data/data20-cir.xlsx") {
   data <- read.xlsx(pathCIR)
   data <- as.data.table(clean_names(data))
-  colnames(data) <- c("annee","region","nom","departement","motif_agreg","motif_det","sexe","nationalite",
-                      "age_cat","parcours","fl_prescrite")
-  write_parquet(data,"data/data_2020.parquet")
-
+  colnames(data) <- c(
+    "annee", "region", "nom", "departement", "motif_agreg", "motif_det",
+    "sexe", "nationalite", "age_cat", "parcours", "fl_prescrite"
+  )
+  write_parquet(data, "data/data_2020.parquet")
+  invisible(NULL)
 }
-

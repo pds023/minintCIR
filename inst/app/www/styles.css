@@ -1,53 +1,96 @@
+/* Font Marianne */
+@font-face {
+  font-family: 'Marianne';
+  src: url('Marianne-Regular.woff') format('woff');
+}
+
+body {
+  font-family: 'Marianne', sans-serif;
+}
+
+/* Value boxes */
 .value-box-title {
-    font-size: 14px !important; /* ou toute autre taille souhaitée */
+  font-size: 14px !important;
 }
 .value-box-value {
-    font-size: 12px !important; /* ou toute autre taille souhaitée */
+  font-size: 12px !important;
 }
 
+/* DataTable column visibility button */
 .buttons-colvis {
-    width: 200px;
+  width: 200px;
 }
 
-.btn-secondary{
+/* Boutons secondaires */
+.btn-secondary {
   --bs-btn-bg: #007bc2 !important;
   margin-top: 10px !important;
 }
 
-      .card-title-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .title-tooltip {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-      }
-      .radio-group-buttons-container {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-        margin-bottom: 0;
-      }
+/* Card title layout */
+.card-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.title-tooltip {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
 
+.radio-group-buttons-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+/* Boutons filtres */
 #exploration_filters_apply:hover {
-  background-color: #007bc2; /* change to your desired color */
-  color: white; /* change to your desired color */
+  background-color: #007bc2;
+  color: white;
 }
+
 #exploration_filters_reset:hover {
-  background-color: #9f0025; /* change to your desired color */
-  color: white; /* change to your desired color */
+  background-color: #9f0025;
+  color: white;
 }
 
-#suggestions{
-  font-size: 10px !important; /* ou toute autre taille souhaitée */
+/* Bouton suggestions */
+#suggestions {
+  font-size: 10px !important;
 }
-/* Define the hover effect */
+
 #suggestions:hover {
-  background-color: #007bc2; /* Change background color to blue on hover */
+  background-color: #007bc2;
   transition: background-color 0.5s;
-
 }
 
+/* Waiter preloader */
+.waiter-overlay-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.my-custom-space {
+  margin-top: 40px;
+}
+
+/* Footer fixe */
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(8, 60, 116, 1);
+  color: white;
+  text-align: center;
+  padding: 5px;
+  z-index: 100;
+}
+
+.footer a {
+  color: white;
+}
