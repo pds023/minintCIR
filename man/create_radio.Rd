@@ -2,13 +2,21 @@
 % Please edit documentation in R/create_radio.R
 \name{create_radio}
 \alias{create_radio}
-\title{Title}
+\title{Cree un groupe de boutons radio}
 \usage{
 create_radio(id, type, disabled_state = FALSE)
 }
 \arguments{
-\item{id}{}
+\item{id}{Identifiant du widget.}
+
+\item{type}{Type de radio : "unite", "pct" ou "graph".}
+
+\item{disabled_state}{Etat desactive initial.}
+}
+\value{
+Un tag shiny radioGroupButtons.
 }
 \description{
-Title
+Wrapper autour de shinyWidgets::radioGroupButtons avec des presets
+pour differents types de boutons (unite, pourcentage, type de graphique).
 }

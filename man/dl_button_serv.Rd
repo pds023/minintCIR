@@ -2,13 +2,18 @@
 % Please edit documentation in R/dl_button_serv.R
 \name{dl_button_serv}
 \alias{dl_button_serv}
-\title{Title}
+\title{Handler de telechargement CSV}
 \usage{
 dl_button_serv(data, label)
 }
 \arguments{
-\item{variables}{}
+\item{data}{Donnees a exporter.}
+
+\item{label}{Nom du fichier (sans extension).}
+}
+\value{
+Un objet downloadHandler.
 }
 \description{
-Title
+Retourne un downloadHandler pour exporter des donnees en CSV.
 }

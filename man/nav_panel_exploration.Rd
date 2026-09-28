@@ -2,13 +2,13 @@
 % Please edit documentation in R/nav_panel_exploration.R
 \name{nav_panel_exploration}
 \alias{nav_panel_exploration}
-\title{Title}
+\title{Panneau principal d'exploration}
 \usage{
 nav_panel_exploration()
 }
-\arguments{
-\item{variables}{}
+\value{
+Le panneau de vue d'ensemble.
 }
 \description{
-Title
+Panneau principal d'exploration
 }

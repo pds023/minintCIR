@@ -17,14 +17,12 @@ create_radio <- function(id, type, disabled_state = FALSE) {
       selected = "val"
     ),
     pct = list(
-      choices = c(`<i class="fa-solid fa-hashtag"></i>` = "niv",
-                  `<i class="fa-solid fa-percent"></i>` = "percent"),
-      selected = character(0)
+      choices = c("Effectifs" = "niv", "Pourcentage" = "percent"),
+      selected = "niv"
     ),
     graph = list(
-      choices = c(`<i class='fa fa-bar-chart'></i>` = "bar",
-                  `<i class='fa fa-pie-chart'></i>` = "pie"),
-      selected = character(0)
+      choices = c("Barres" = "bar", "Mosaïque" = "pie"),
+      selected = "bar"
     )
   )
 

@@ -2,13 +2,24 @@
 % Please edit documentation in R/graph_compare.R
 \name{graph_compare}
 \alias{graph_compare}
-\title{Title}
+\title{Comparer la distribution de plusieurs groupes}
 \usage{
 graph_compare(data, groupColumn, input_var, input_mod, input_pct)
 }
 \arguments{
-\item{groupColumn}{}
+\item{data}{Tableau source.}
+
+\item{groupColumn}{Colonne à répartir sur l'axe X.}
+
+\item{input_var}{Variable qui définit les groupes comparés.}
+
+\item{input_mod}{Modalités sélectionnées.}
+
+\item{input_pct}{"niv" ou "nb" pour les effectifs, "percent" pour les parts.}
+}
+\value{
+Un objet highchart ou NULL en l'absence de données.
 }
 \description{
-Title
+Comparer la distribution de plusieurs groupes
 }

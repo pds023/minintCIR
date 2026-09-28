@@ -2,10 +2,13 @@
 % Please edit documentation in R/nav_menu_apropos.R
 \name{nav_menu_apropos}
 \alias{nav_menu_apropos}
-\title{Title}
+\title{Panneau de méthode, sources et crédits}
 \usage{
 nav_menu_apropos()
 }
+\value{
+Un panneau de navigation.
+}
 \description{
-Title
+Panneau de méthode, sources et crédits
 }

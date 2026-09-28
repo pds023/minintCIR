@@ -15,6 +15,7 @@ preprocess <- function(pathCIR = "data/data20-cir.xlsx") {
     "annee", "region", "nom", "departement", "motif_agreg", "motif_det",
     "sexe", "nationalite", "age_cat", "parcours", "fl_prescrite"
   )
-  write_parquet(data, "data/data_2020.parquet")
+  dir.create("inst/extdata", recursive = TRUE, showWarnings = FALSE)
+  write_parquet(data, "inst/extdata/data_2020.parquet")
   invisible(NULL)
 }

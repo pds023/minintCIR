@@ -1,39 +1,45 @@
-#' Graphique de comparaison entre modalites
+#' Comparer la distribution de plusieurs groupes
 #'
-#' Compare la distribution d'une variable selon des modalites selectionnees.
-#'
-#' @param data data.table source.
-#' @param groupColumn Nom de la colonne de regroupement pour l'axe X.
-#' @param input_var Nom de la variable de comparaison.
-#' @param input_mod Vecteur des modalites selectionnees.
-#' @param input_pct Affichage : "niv" pour les effectifs, autre pour les pourcentages.
-#'
-#' @return Un objet highchart ou NULL si aucune donnee.
+#' @param data Tableau source.
+#' @param groupColumn Colonne à répartir sur l'axe X.
+#' @param input_var Variable qui définit les groupes comparés.
+#' @param input_mod Modalités sélectionnées.
+#' @param input_pct "niv" ou "nb" pour les effectifs, "percent" pour les parts.
+#' @return Un objet highchart ou NULL en l'absence de données.
 #' @export
 graph_compare <- function(data, groupColumn, input_var, input_mod, input_pct) {
-  if (is.null(data)) return(NULL)
+  if (is.null(data) || !nrow(data) || !length(input_mod) ||
+      length(groupColumn) != 1L || length(input_var) != 1L ||
+      !all(c(groupColumn, input_var) %in% names(data))) return(NULL)
 
-  data_list <- lapply(input_mod, function(mod) {
-    data_subset <- data[get(input_var) %in% mod]
-    if (nrow(data_subset) == 0) return(NULL)
-
-    data_subset <- data_subset[, .N, by = groupColumn]
-    colnames(data_subset) <- c("var", "N")
-    data_subset[, var_compare := mod]
-    data_subset[, pct := round(N / sum(N), 4)]
-    data_subset
-  })
-
-  data_list <- Filter(Negate(is.null), data_list)
-
-  if (length(data_list) > 0) {
-    data_graph <- rbindlist(data_list)
-    if (input_pct %in% "niv") {
-      return(hchart(data_graph, type = "column", hcaes(x = var, y = "N", group = "var_compare")))
-    } else {
-      return(hchart(data_graph, type = "column", hcaes(x = var, y = "pct", group = "var_compare")))
-    }
+  categories <- as.character(data[[groupColumn]])
+  groups <- as.character(data[[input_var]])
+  categories[is.na(categories) | !nzchar(categories)] <- "Non renseigné"
+  groups[is.na(groups) | !nzchar(groups)] <- "Non renseigné"
+  selected <- unique(as.character(input_mod))
+  selected <- selected[selected %in% groups]
+  if (!length(selected)) return(NULL)
+  keep <- groups %in% selected
+  counts <- table(categories[keep], factor(groups[keep], levels = selected))
+  totals <- colSums(counts)
+  order_categories <- order(-rowSums(counts), rownames(counts))
+  shown <- utils::head(order_categories, 12L)
+  subtitle <- if (nrow(counts) > 12L) {
+    "12 premières catégories · parts sur chaque groupe complet · détail dans Données"
+  } else {
+    "Les parts sont calculées au sein de chaque groupe comparé"
   }
-
-  NULL
+  percent <- identical(input_pct, "percent")
+  chart <- highcharter::highchart()
+  for (i in seq_along(selected)) {
+    chart <- highcharter::hc_add_series(
+      chart, type = "column", name = selected[i],
+      data = cir_chart_points(rownames(counts)[shown], as.numeric(counts[shown, i]), totals[i], percent)
+    )
+  }
+  chart <- highcharter::hc_xAxis(
+    chart, categories = as.list(rownames(counts)[shown]),
+    labels = list(autoRotation = c(-35, -60), style = list(fontSize = "11px"))
+  )
+  cir_chart_theme(chart, percent, subtitle, legend = TRUE, within_group = TRUE)
 }

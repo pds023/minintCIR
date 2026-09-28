@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_picker.R
 \name{create_picker}
 \alias{create_picker}
-\title{Title}
+\title{Cree un pickerInput avec configuration francaise}
 \usage{
 create_picker(
   id,
@@ -10,9 +10,29 @@ create_picker(
   choices = c(),
   multiple = TRUE,
   selected = NULL,
-  select_all = TRUE
+  select_all = TRUE,
+  placeholder = if (multiple) "Toutes les valeurs" else "Choisir une dimension"
 )
 }
+\arguments{
+\item{id}{Identifiant du widget.}
+
+\item{label}{Label affiche.}
+
+\item{choices}{Vecteur de choix.}
+
+\item{multiple}{Autoriser la selection multiple.}
+
+\item{selected}{Valeur(s) selectionnee(s) par defaut.}
+
+\item{select_all}{Afficher les boutons "Tout selectionner / deselectionner".}
+
+\item{placeholder}{Texte affiché en l'absence de sélection.}
+}
+\value{
+Un tag shiny pickerInput.
+}
 \description{
-Title
+Wrapper autour de shinyWidgets::pickerInput avec les textes en francais
+et la recherche en direct activee.
 }

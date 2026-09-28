@@ -2,13 +2,22 @@
 % Please edit documentation in R/create_dt.R
 \name{create_dt}
 \alias{create_dt}
-\title{Title}
+\title{Crée un DataTable interactif avec configuration française}
 \usage{
-create_dt(data, length = 5, cols_names = NULL, select_cols = FALSE)
+create_dt(data, length = 15, cols_names = NULL, select_cols = FALSE)
 }
 \arguments{
-\item{length}{}
+\item{data}{Données à afficher, ou fonction réactive retournant les données.}
+
+\item{length}{Nombre de lignes par page.}
+
+\item{cols_names}{Noms de colonnes à afficher.}
+
+\item{select_cols}{Activer le choix des colonnes visibles.}
+}
+\value{
+Un objet renderDT.
 }
 \description{
-Title
+Crée un DataTable interactif avec configuration française
 }

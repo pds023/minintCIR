@@ -2,10 +2,13 @@
 % Please edit documentation in R/sidebar_exploration.R
 \name{sidebar_exploration}
 \alias{sidebar_exploration}
-\title{Title}
+\title{Barre latérale de filtres pour l'exploration}
 \usage{
 sidebar_exploration()
 }
+\value{
+Les contrôles de filtre de l'application.
+}
 \description{
-Title
+Barre latérale de filtres pour l'exploration
 }

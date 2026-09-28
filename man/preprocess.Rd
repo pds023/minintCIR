@@ -2,13 +2,17 @@
 % Please edit documentation in R/preprocess.R
 \name{preprocess}
 \alias{preprocess}
-\title{Title}
+\title{Pretraitement des donnees CIR}
 \usage{
 preprocess(pathCIR = "data/data20-cir.xlsx")
 }
 \arguments{
-\item{data_cir}{}
+\item{pathCIR}{Chemin vers le fichier Excel source.}
+}
+\value{
+Invisible NULL. Le fichier Parquet est ecrit sur disque.
 }
 \description{
-Title
+Charge un fichier Excel brut, nettoie les noms de colonnes
+et sauvegarde en format Parquet.
 }

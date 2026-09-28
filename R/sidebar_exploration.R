@@ -1,23 +1,33 @@
-#' Barre laterale de filtres pour l'exploration
-#'
-#' Genere dynamiquement la sidebar avec les filtres de l'onglet Exploration.
-#'
-#' @return Un objet renderUI contenant l'accordion de filtres.
+#' Barre latérale de filtres pour l'exploration
+#' @return Les contrôles de filtre de l'application.
 #' @export
 sidebar_exploration <- function() {
-  renderUI({
-    accordion(accordion_panel(
-      title = "Filtrer", icon = icon("filter"),
-      create_picker(id = "exploration_filter_sexe", label = "Sexe :"),
-      create_picker(id = "exploration_filter_pays", label = "Pays :"),
-      create_picker(id = "exploration_filter_age", label = "Age :"),
-      create_picker(id = "exploration_filter_region", label = "Region :"),
-      create_picker(id = "exploration_filter_departement", label = "Departement :"),
-      create_picker(id = "exploration_filter_motif_agreg", label = "Motif (niv1) :"),
-      create_picker(id = "exploration_filter_motif_det", label = "Motif (niv2) :"),
-      create_picker(id = "exploration_filter_parcours", label = "Parcours :"),
-      actionButton(inputId = "exploration_filters_apply", label = "Appliquer", width = "100%"),
-      actionButton(inputId = "exploration_filters_reset", label = "Reinitialiser", width = "100%")
-    ))
-  })
+  tagList(
+    div(class = "sidebar-intro", "Définissez votre population pour explorer les données."),
+    uiOutput("filter_summary"),
+    tags$details(class = "filter-group", open = "open",
+      tags$summary(bs_icon("person"), "Profil des signataires"),
+      create_picker("exploration_filter_sexe", "Sexe"),
+      create_picker("exploration_filter_pays", "Nationalité"),
+      create_picker("exploration_filter_age", "Tranche d’âge")
+    ),
+    tags$details(class = "filter-group",
+      tags$summary(bs_icon("geo-alt"), "Territoire"),
+      create_picker("exploration_filter_region", "Région"),
+      create_picker("exploration_filter_departement", "Département")
+    ),
+    tags$details(class = "filter-group",
+      tags$summary(bs_icon("signpost-split"), "Motif et parcours"),
+      create_picker("exploration_filter_motif_agreg", "Motif de séjour"),
+      create_picker("exploration_filter_motif_det", "Motif détaillé"),
+      create_picker("exploration_filter_parcours", "Parcours linguistique")
+    ),
+    div(class = "filter-actions",
+      actionButton("exploration_filters_apply", "Appliquer les filtres", icon = icon("check"), class = "btn-primary", width = "100%"),
+      actionButton("exploration_filters_reset", "Tout réinitialiser", icon = icon("arrow-rotate-left"), class = "btn-reset", width = "100%")
+    ),
+    div(class = "sidebar-note", bs_icon("info-circle"),
+      p("Sans sélection, toutes les valeurs sont incluses. Les filtres s’appliquent aux graphiques, aux comparaisons et à l’export.")),
+    div(class = "sidebar-source", span(class = "status-dot"), "Jeu de données embarqué", tags$small("Source : ministère de l’Intérieur · 2020"))
+  )
 }

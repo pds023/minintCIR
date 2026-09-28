@@ -2,13 +2,22 @@
 % Please edit documentation in R/graph_explore.R
 \name{graph_explore}
 \alias{graph_explore}
-\title{Title}
+\title{Graphique d'exploration : barres ou carte proportionnelle}
 \usage{
 graph_explore(data, input_type, input_pct, group = FALSE)
 }
 \arguments{
-\item{input_pct}{}
+\item{data}{Tableau agrégé avec colonnes var/N ou agreg/var/N.}
+
+\item{input_type}{"bar" ou "pie" (carte proportionnelle historique).}
+
+\item{input_pct}{"niv" ou "nb" pour les effectifs, "percent" pour les parts.}
+
+\item{group}{TRUE pour afficher un regroupement.}
+}
+\value{
+Un objet highchart ou NULL en l'absence de données.
 }
 \description{
-Title
+Graphique d'exploration : barres ou carte proportionnelle
 }

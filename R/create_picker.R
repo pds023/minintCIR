@@ -9,21 +9,25 @@
 #' @param multiple Autoriser la selection multiple.
 #' @param selected Valeur(s) selectionnee(s) par defaut.
 #' @param select_all Afficher les boutons "Tout selectionner / deselectionner".
+#' @param placeholder Texte affiché en l'absence de sélection.
 #'
 #' @return Un tag shiny pickerInput.
 #' @export
 create_picker <- function(id, label = NULL, choices = c(), multiple = TRUE,
-                          selected = NULL, select_all = TRUE) {
+                          selected = NULL, select_all = TRUE,
+                          placeholder = if (multiple) "Toutes les valeurs" else "Choisir une dimension") {
   opts <- pickerOptions(
-    noneSelectedText = "Aucune selection",
+    noneSelectedText = placeholder,
     liveSearch = TRUE,
-    container = "body",
-    actionsBox = select_all,
-    size = 5,
+    actionsBox = select_all && multiple,
+    size = 7,
     liveSearchNormalize = TRUE,
-    noneResultsText = "Aucun resultat",
-    deselectAllText = "Tout deselectionner",
-    selectAllText = "Tout selectionner"
+    noneResultsText = "Aucun résultat",
+    liveSearchPlaceholder = "Rechercher…",
+    countSelectedText = "{0} valeurs sélectionnées",
+    selectedTextFormat = "count > 2",
+    deselectAllText = "Tout effacer",
+    selectAllText = "Tout sélectionner"
   )
 
   pickerInput(
