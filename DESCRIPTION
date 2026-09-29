@@ -27,5 +27,6 @@ Suggests:
     jsonlite,
     pkgload,
     roxygen2,
+    rsconnect,
     testthat
 RoxygenNote: 7.3.2

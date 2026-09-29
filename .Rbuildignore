@@ -7,6 +7,9 @@ $run_dev.*
 ^.here$
 ^app\.R$
 ^rsconnect$
+^manifest\.json$
+^renv$
+^renv\.lock$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^CODE_OF_CONDUCT\.md$

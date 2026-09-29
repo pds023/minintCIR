@@ -67,6 +67,23 @@ Les pourcentages d'exploration utilisent le total des observations sélectionné
 
 L'export est un **CSV séparé par des points-virgules, encodé en UTF-8 avec BOM**, adapté notamment à l'ouverture dans Excel. Il contient toutes les observations retenues par les filtres latéraux. La recherche et la pagination du tableau modifient seulement son affichage, sans restreindre l'export.
 
+## Déployer sur Posit Connect
+
+Le fichier `manifest.json` à la racine décrit le bundle Shiny, ses ressources et les versions de ses dépendances. Il a été généré avec R 4.5.1 et `rsconnect::writeManifest()` pour un déploiement depuis Git.
+
+Après une modification du code, des ressources ou des dépendances, régénérer le manifeste depuis la racine du dépôt :
+
+```r
+install.packages("rsconnect") # Une seule fois, si nécessaire
+source("dev/03_deploy.R")
+```
+
+Ce script prépare uniquement le manifeste. Versionner `manifest.json` avec les fichiers de l'application, puis sélectionner ce dépôt et sa racine dans Posit Connect. Le serveur devra disposer d'une version de R compatible et pouvoir restaurer les dépendances déclarées.
+
+Le lanceur `app.R` charge le package depuis les sources avec `pkgload::load_all()`, puis appelle `getExportedValue("minintCIR", "run_app")()`. Conserver cet appel dynamique : il évite de déclarer `minintCIR` comme une dépendance distante via `minintCIR::run_app()`.
+
+Vérifier les empreintes des fichiers et le démarrage depuis le bundle seul avec `Rscript tests/deploy-smoke.R`. Voir la [documentation officielle de writeManifest](https://rstudio.github.io/rsconnect/reference/writeManifest.html).
+
 ## Vérifications
 
 Depuis la racine du dépôt, avec les dépendances installées :
